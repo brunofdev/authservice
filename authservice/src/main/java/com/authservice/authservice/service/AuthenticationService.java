@@ -30,7 +30,7 @@ public class AuthenticationService {
     private void validateCredentialsWithUserService(CredentialsDTO credentials){
         WebClient webClient = webClientBuilder.baseUrl(userServiceUrl).build();
         webClient.post()
-                .uri("/userservice/internal/validate-user-credential")
+                .uri("/internal/users/validate-credential")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header("X-Internal-Secret", internalApiSecret)
                 .body(Mono.just(credentials), CredentialsDTO.class)
