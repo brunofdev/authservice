@@ -1,5 +1,6 @@
 package com.authservice.authservice.controller;
 
+import com.authservice.authservice.core.apiresponse.ApiResponse;
 import com.authservice.authservice.dto.AuthResponseDTO;
 import com.authservice.authservice.dto.CredentialsDTO;
 import com.authservice.authservice.service.AuthenticationService;
@@ -19,9 +20,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody CredentialsDTO credentialsDTO){
+    public ResponseEntity<ApiResponse<AuthResponseDTO>> login(@Valid @RequestBody CredentialsDTO credentialsDTO){
         String jwtToken = authenticationService.login(credentialsDTO);
         AuthResponseDTO responseDTO = new AuthResponseDTO(jwtToken);
-        return ResponseEntity.ok(responseDTO);
+        return ResponseEntity.ok().body(ApiResponse.success("Usuário autenticado com sucesso", responseDTO));
     }
 }
