@@ -40,7 +40,7 @@ public class AuthenticationService {
                 .retrieve()
                 .onStatus(
                         status -> status.is4xxClientError(),
-                        response -> Mono.error(new InvalidCredentialsException("Credenciais inválidas fornecidas pelo user-service."))
+                        response -> Mono.error(new InvalidCredentialsException("Usuário ou senha inválidas"))
                 )
                 .bodyToMono(ApiResponse.class)
                 .block();
