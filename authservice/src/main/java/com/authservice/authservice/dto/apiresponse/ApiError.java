@@ -1,4 +1,4 @@
-package com.authservice.authservice.core.apiresponse;
+package com.authservice.authservice.dto.apiresponse;
 
 import java.time.LocalDateTime;
 

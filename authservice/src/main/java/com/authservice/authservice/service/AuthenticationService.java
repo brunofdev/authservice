@@ -1,6 +1,6 @@
 package com.authservice.authservice.service;
 
-import com.authservice.authservice.core.apiresponse.ApiResponse;
+import com.authservice.authservice.dto.apiresponse.ApiResponse;
 import com.authservice.authservice.dto.CredentialsDTO;
 import com.authservice.authservice.exceptions.InvalidCredentialsException;
 import com.authservice.authservice.jwt.JwtProvider;

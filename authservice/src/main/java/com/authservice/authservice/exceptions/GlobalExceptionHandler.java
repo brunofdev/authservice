@@ -1,7 +1,7 @@
 package com.authservice.authservice.exceptions;
 
-import com.authservice.authservice.core.apiresponse.ApiError;
-import com.authservice.authservice.core.apiresponse.ApiResponse;
+import com.authservice.authservice.dto.apiresponse.ApiError;
+import com.authservice.authservice.dto.apiresponse.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

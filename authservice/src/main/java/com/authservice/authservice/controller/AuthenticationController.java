@@ -1,6 +1,6 @@
 package com.authservice.authservice.controller;
 
-import com.authservice.authservice.core.apiresponse.ApiResponse;
+import com.authservice.authservice.dto.apiresponse.ApiResponse;
 import com.authservice.authservice.dto.AuthResponseDTO;
 import com.authservice.authservice.dto.CredentialsDTO;
 import com.authservice.authservice.service.AuthenticationService;
