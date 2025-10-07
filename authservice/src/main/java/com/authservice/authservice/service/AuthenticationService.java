@@ -1,5 +1,6 @@
 package com.authservice.authservice.service;
 
+import com.authservice.authservice.dto.UserDTO;
 import com.authservice.authservice.dto.apiresponse.ApiResponse;
 import com.authservice.authservice.dto.CredentialsDTO;
 import com.authservice.authservice.exceptions.InvalidCredentialsException;
@@ -28,11 +29,11 @@ public class AuthenticationService {
         this.jwtProvider = jwtProvider;
     }
 
-    private void validateCredentialsWithUserService(CredentialsDTO credentials) {
+    private UserDTO validateCredentialsWithUserService(CredentialsDTO credentials) {
         WebClient webClient = webClientBuilder.baseUrl(userServiceUrl).build();
 
         // A chamada agora espera receber um corpo de resposta
-        ApiResponse apiResponse = webClient.post()
+        ApiResponse<UserDTO> apiResponse = webClient.post()
                 .uri("/internal/users/validate-credential")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header("X-Internal-Secret", internalApiSecret)
@@ -49,18 +50,11 @@ public class AuthenticationService {
         if (apiResponse == null || !apiResponse.getStatus()) {
             throw new InvalidCredentialsException("A validação de credenciais falhou (status false retornado pelo user-service).");
         }
-
-        // Se apiResponse.getStatus() for true, o método termina com sucesso.
+        return apiResponse.getDados();
     }
 
     public String login(CredentialsDTO credentials) {
-        validateCredentialsWithUserService(credentials);
-        return jwtProvider.generateToken(credentials.getUserName());
+        UserDTO userDTO = validateCredentialsWithUserService(credentials);
+        return jwtProvider.generateToken(credentials.getUserName(), userDTO.getRole());
     }
-
-
-
-
-
-
 }

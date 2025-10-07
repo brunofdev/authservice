@@ -1,4 +1,5 @@
 package com.authservice.authservice.jwt;
+import com.authservice.authservice.enums.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -23,11 +26,15 @@ public class JwtProvider {
     /**
      * Gera um novo token JWT para um usuário.
      */
-    public String generateToken(String username) {
+    public String generateToken(String username, UserRole role) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role.name());
+
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
 
         return Jwts.builder()
+                .claims(claims)
                 .subject(username) // Define o "dono" do token (geralmente o username ou email)
                 .issuedAt(now) // Define a data de criação
                 .expiration(expiryDate) // Define a data de expiração
