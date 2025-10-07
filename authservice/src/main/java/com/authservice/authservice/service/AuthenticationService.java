@@ -6,6 +6,7 @@ import com.authservice.authservice.dto.CredentialsDTO;
 import com.authservice.authservice.exceptions.InvalidCredentialsException;
 import com.authservice.authservice.jwt.JwtProvider;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class AuthenticationService {
                         status -> status.is4xxClientError(),
                         response -> Mono.error(new InvalidCredentialsException("Usuário ou senha inválidas"))
                 )
-                .bodyToMono(ApiResponse.class)
+                .bodyToMono(new ParameterizedTypeReference<ApiResponse<UserDTO>>() {})
                 .block();
 
         // MUDANÇA 3: Verificamos o campo "status" dentro do JSON recebido
