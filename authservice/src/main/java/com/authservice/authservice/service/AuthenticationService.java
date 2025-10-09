@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.Map;
+
 @Service
 public class AuthenticationService {
 
@@ -54,8 +56,10 @@ public class AuthenticationService {
         return apiResponse.getDados();
     }
 
-    public String login(CredentialsDTO credentials) {
-        UserDTO userDTO = validateCredentialsWithUserService(credentials);
-        return jwtProvider.generateToken(credentials.getUserName(), userDTO.getRole());
+    public Map<String, Object> login(CredentialsDTO credentials) {
+        UserDTO userData = validateCredentialsWithUserService(credentials);
+        String token = jwtProvider.generateToken(userData.getUserName(), userData.getRole());
+        // Retorna um mapa com o token e os dados do usuário
+        return Map.of("token", token, "user", userData);
     }
 }
